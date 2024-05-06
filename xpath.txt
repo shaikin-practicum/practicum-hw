@@ -1,0 +1,41 @@
+Sign in:
+	//span[@id = 'gh-ug']/a[text() = 'Sign in']
+
+register:
+	//span[@id = 'gh-ug']//a[text() = 'register']
+
+Daily Deals:
+	//a[@class = 'gh-p' and text() = ' Daily Deals']
+
+Gift Cards:
+	//a[@class = 'gh-p' and text() = ' Gift Cards']
+
+Help & Contact:
+	//a[@class = 'gh-p' and text() = ' Help & Contact']
+
+Sell:
+	//a[@class = 'gh-p' and text() = ' Sell']
+
+My eBay:
+	//div[@class = 'gh-menu']/a[@title = 'My eBay'] or //a[@title = 'My eBay']
+
+Notification:
+	//I[@id = 'gh-Alerts-i' and text() = 'Notification']
+
+Shopping Cart:
+	//li[@id = 'gh-minicart-hover']/svg[@class = 'gh-cart-icon']
+
+eBay:
+	//a[@id = 'gh-la']
+
+Shop by category:
+	//div[@id = 'gh-shop']
+
+Search for anything:
+	//input[@placeholder = 'Search for anything']
+
+All Categories:
+	//select[@aria-label = 'Select a category for search']
+
+Search:
+	//input[@value = 'Search']
