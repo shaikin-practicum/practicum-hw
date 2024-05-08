@@ -25,3 +25,13 @@ def click_search(context):
 @step('All displayed items are relevant to keyword "shoes"')
 def verify_results_shoes_items(context):
     results = context.browser.find_element(By.XPATH, "//span[contains(text(), 'Shoes')]")
+
+
+@step('Click "Daily Deal" link')
+def verify_results_shoes_items(context):
+    context.browser.find_element(By.XPATH, "//a[@class = 'gh-p' and text() = ' Daily Deals']")
+
+
+@step('All displayed items are relevant to "Daily Deals"')
+def verify_results_daily_deals_items(context):
+    daily_deals_items = context.browser.find_element(By.XPATH, "//span[contains(text(), ' off')]")

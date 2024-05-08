@@ -7,3 +7,8 @@ Feature: eBay Regression
     And In search bar type "shoes"
     And Click "search" button
     Then All displayed items are relevant to keyword "shoes"
+
+  Scenario: "Daily Deals" verification
+    Given Navigate to ebay
+    And Click "Daily Deal" link
+    Then All displayed items are relevant to "Daily Deals"
