@@ -27,21 +27,15 @@ def verify_results_shoes_items(context):
     results = context.browser.find_element(By.XPATH, "//span[contains(text(), 'Shoes')]")
 
 
-@step('Click "Daily Deal" link')
-def click_daily_deal_link(context):
-    click_daily_deal = context.browser.find_element(By.XPATH, "//a[@class = 'gh-p' and text() = ' Daily Deals']")
+@step('Click {box} link')
+def click_daily_deal_link(context, box):
+    click_daily_deal = context.browser.find_element(By.XPATH, f"//*[contains(@class, 'gh-') and contains(text(), {box})]")
     click_daily_deal.click()
 
 
 @step('All displayed items are relevant to "Daily Deals"')
 def verify_results_daily_deals_items(context):
     daily_deals_items = context.browser.find_element(By.XPATH, "//span[contains(text(), ' off')]")
-
-
-@step('Click "Brand Outlet" link')
-def click_brand_outlet_link(context):
-    click_brand_outlet = context.browser.find_element(By.XPATH, "//a[text() = ' Brand Outlet']")
-    click_brand_outlet.click()
 
 
 @step('All displayed items are relevant to "Brand Outlet"')

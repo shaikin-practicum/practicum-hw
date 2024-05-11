@@ -10,10 +10,10 @@ Feature: eBay Regression
 
   Scenario: "Daily Deals" verification
     Given Navigate to ebay
-    And Click "Daily Deal" link
+    And Click 'Daily Deal' link
     Then All displayed items are relevant to "Daily Deals"
 
   Scenario: "Brand Outlet" verification
     Given Navigate to ebay
-    And Click "Brand Outlet" link
+    And Click 'Brand Outlet' link
     Then All displayed items are relevant to "Brand Outlet"
