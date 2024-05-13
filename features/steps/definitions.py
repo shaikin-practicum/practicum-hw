@@ -1,6 +1,7 @@
 from behave import step
 from selenium import webdriver
 from selenium.webdriver.common.by import By
+from time import sleep
 
 
 @step('Navigate to ebay')
@@ -22,22 +23,14 @@ def click_search(context):
     press_search.click()
 
 
-@step('All displayed items are relevant to keyword "shoes"')
-def verify_results_shoes_items(context):
-    results = context.browser.find_element(By.XPATH, "//span[contains(text(), 'Shoes')]")
+@step('All displayed items are relevant to {tag} and {class_one} and {v_one} and {class_two} and {v_two}')
+def verify_items(context, tag, class_one, v_one, class_two, v_two):
+    item = context.browser.find_element(By.XPATH, f"//{tag}[@{class_one} = {v_one} and contains({class_two}, {v_two})]")
+    item.click()
+    sleep(5)
 
 
 @step('Click {box} link')
-def click_daily_deal_link(context, box):
-    click_daily_deal = context.browser.find_element(By.XPATH, f"//*[contains(@class, 'gh-') and contains(text(), {box})]")
-    click_daily_deal.click()
-
-
-@step('All displayed items are relevant to "Daily Deals"')
-def verify_results_daily_deals_items(context):
-    daily_deals_items = context.browser.find_element(By.XPATH, "//span[contains(text(), ' off')]")
-
-
-@step('All displayed items are relevant to "Brand Outlet"')
-def verification_brand_outlet(context):
-    verify_results_brand_outlet_items = context.browser.find_element(By.XPATH, "//div[contains(text(), 'brand')]")
+def click_link(context, box):
+    link = context.browser.find_element(By.XPATH, f"//*[contains(@class, 'gh-') and contains(text(), {box})]")
+    link.click()
