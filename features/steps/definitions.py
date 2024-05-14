@@ -23,14 +23,21 @@ def click_search(context):
     press_search.click()
 
 
-@step('All displayed items are relevant to {tag} and {class_one} and {v_one} and {class_two} and {v_two}')
-def verify_items(context, tag, class_one, v_one, class_two, v_two):
-    item = context.browser.find_element(By.XPATH, f"//{tag}[@{class_one} = {v_one} and contains({class_two}, {v_two})]")
-    item.click()
-    sleep(5)
-
-
 @step('Click {box} link')
 def click_link(context, box):
     link = context.browser.find_element(By.XPATH, f"//*[contains(@class, 'gh-') and contains(text(), {box})]")
     link.click()
+
+
+@step('All displayed items are relevant to {v_one} and {v_two}')
+def verify_items(context, v_one, v_two):
+    item = context.browser.find_element(By.XPATH, f"//*[@* = {v_one} and contains(., {v_two})]")
+
+
+@step('Filter "{filter_name}" by "{value}"')
+def filter_items(context, filter_name, value):
+    filter_option = context.browser.find_element(By.XPATH, f"//li[@class = 'x-refine__main__list ']"
+                                                           f"[.//div[text() = '{filter_name}']]//input[@* = '{value}']")
+    filter_option.click()
+    sleep(3)
+    
