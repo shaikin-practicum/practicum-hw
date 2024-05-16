@@ -1,0 +1,8 @@
+Nested Selectors - //div[@class = 'september']/div[@class = 'irritating']//li
+Beginning Conditionals - //span[@class = 'price' and text() = '$25,000']/preceding-sibling::a
+Beginning Conditionals #2 - //div[span[text() = 'Ford'] and number(span[@class = 'year']) > 1950]/a
+Beginning Conditionals #3 - //div[span[text() = 'Ford'] and span[text() = '1958']]/a
+Find number of patients - //patient/following-sibling::providerorganization//name[text() = 'Good Health Clinic']
+Find the patient - //birthtime[contains(@value, '19551217')]/parent::administrativegendercode/preceding-sibling::name/family
+Find the rate - //rate[loantype='30-Year Fixed Rate' and subtype='B']
+Find the color - //colors/color[colorvalue = '10']/child::mathcolor/text()
