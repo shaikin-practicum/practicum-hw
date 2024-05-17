@@ -37,3 +37,9 @@ Feature: eBay Regression
     And Filter "Buying Format" by "Buy It Now"
     And Filter "Delivery Options" by "Free International Shipping"
     And Filter "Show only" by "Free Returns"
+
+  Scenario: Search validation
+    Given Navigate to ebay
+    And In search bar type "shoes"
+    And Click "search" button
+    Then All items are "shoes" related

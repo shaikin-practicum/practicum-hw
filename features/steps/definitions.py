@@ -11,10 +11,10 @@ def test(context):
     context.browser.get("https://www.ebay.com")
 
 
-@step('In search bar type "shoes"')
-def search_items(context):
+@step('In search bar type "{item}"')
+def search_items(context, item):
     search = context.browser.find_element(By.XPATH, "//input[@placeholder = 'Search for anything']")
-    search.send_keys("shoes")
+    search.send_keys(f"{item}")
 
 
 @step('Click "search" button')
@@ -40,4 +40,19 @@ def filter_items(context, filter_name, value):
                                                            f"[.//div[text() = '{filter_name}']]//input[@* = '{value}']")
     filter_option.click()
     sleep(3)
-    
+
+
+@step('All items are "{desired_title}" related')
+def check_all_item_title(context, desired_title):
+    issues = []
+    for page in range(2):
+        all_items = context.browser.find_elements(By.XPATH, "//li[contains(@id, 'item')]//span[@role = 'heading']")
+        for item in all_items:
+            title = item.text
+            if desired_title.lower() not in title.lower():
+                issues.append(f'{title} is not {desired_title} related')
+        next_page = context.browser.find_element(By.XPATH, "//a[@type = 'next']")
+        next_page.click()
+
+    if issues:
+        raise Exception(f'Following issues discovered: \n{issues}')
