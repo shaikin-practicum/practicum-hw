@@ -64,3 +64,16 @@ def make_sure_page(context, desired_page):
     if desired_page.lower() not in current_page.lower():
         raise Exception(f'Page {desired_page} not found on {current_page}')
 
+
+@step('Click "{accessibility}" link page')
+def click_link_policy(context, accessibility):
+    policy_link = context.browser.find_element(By.XPATH, f"//a[contains(text(), '{accessibility}')]")
+    policy_link.click()
+
+
+@step('Check text of policy')
+def check_text(context):
+    desired_text = context.text
+    presented_text = context.browser.find_element(By.XPATH, f"//p[contains(text(), '{context.text}')]").text
+    if desired_text not in presented_text:
+        raise Exception(f'Policy {desired_text} not found on {presented_text}')

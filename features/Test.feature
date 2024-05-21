@@ -54,3 +54,11 @@ Feature: eBay Regression
     | Daily Deal   | Daily Deal   |
     | Brand Outlet | Brand Outlet |
     | Gift Cards   | Gift Cards   |
+
+  Scenario: Check big text
+    Given Navigate to ebay
+    And Click "Accessibility" link page
+    Then Check text of policy
+    """
+    eBay Inc. is committed to building a community enabled by people and supported by technology that’s open to the broadest audience possible.
+    """
