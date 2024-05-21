@@ -77,3 +77,14 @@ def check_text(context):
     presented_text = context.browser.find_element(By.XPATH, f"//p[contains(text(), '{context.text}')]").text
     if desired_text not in presented_text:
         raise Exception(f'Policy {desired_text} not found on {presented_text}')
+
+
+@step('Checking filters through table data')
+def table_data(context):
+    for row in context.table:
+        filter_name = row['filter_name']
+        filter_value = row['filter_value']
+        filter_checkbox = context.browser.find_element(By.XPATH, f"//li[@class = 'x-refine__main__list ']"
+                                                                 f"[.//div[text() = '{filter_name}']]"
+                                                                 f"//input[@* = '{filter_value}']")
+        filter_checkbox.click()

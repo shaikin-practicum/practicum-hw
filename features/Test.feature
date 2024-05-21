@@ -62,3 +62,20 @@ Feature: eBay Regression
     """
     eBay Inc. is committed to building a community enabled by people and supported by technology that’s open to the broadest audience possible.
     """
+
+  Scenario: Structured data as a variable
+    Given Navigate to ebay
+    And In search bar type "shoes"
+    And Click "search" button
+    Then Checking filters through table data
+    | filter_name      | filter_value                |
+    | US Shoe Size     | 10                          |
+    | Color            | Black                       |
+    | Occasion         | Casual                      |
+    | Upper Material   | Fabric                      |
+    | Brand            | adidas                      |
+    | Condition        | New with tags               |
+    | Price            | Under $75.00                |
+    | Buying Format    | Buy It Now                  |
+    | Delivery Options | Free International Shipping |
+    | Show only        | Free Returns                |
