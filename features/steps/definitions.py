@@ -56,3 +56,11 @@ def check_all_item_title(context, desired_title):
 
     if issues:
         raise Exception(f'Following issues discovered: \n{issues}')
+
+
+@step('Make sure we land on "{desired_page}"')
+def make_sure_page(context, desired_page):
+    current_page = context.browser.title
+    if desired_page.lower() not in current_page.lower():
+        raise Exception(f'Page {desired_page} not found on {current_page}')
+

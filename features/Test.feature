@@ -43,3 +43,14 @@ Feature: eBay Regression
     And In search bar type "shoes"
     And Click "search" button
     Then All items are "shoes" related
+
+  Scenario Outline: Header navigation check
+    Given Navigate to ebay
+    And Click "<header link>" link
+    Then Make sure we land on "<desired_page>"
+
+  Examples:
+    | header link  | desired_page |
+    | Daily Deal   | Daily Deal   |
+    | Brand Outlet | Brand Outlet |
+    | Gift Cards   | Gift Cards   |
