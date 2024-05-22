@@ -79,3 +79,9 @@ Feature: eBay Regression
     | Buying Format    | Buy It Now                  |
     | Delivery Options | Free International Shipping |
     | Show only        | Free Returns                |
+
+  Scenario: Validate Search functionality on few pages when landed on the page "5" till page "2"
+    Given Navigate to ebay
+    And In search bar type "shoes"
+    And Click "search" button
+    Then Starting with page "5" validate result "shoes" till page "2"

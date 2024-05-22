@@ -88,3 +88,25 @@ def table_data(context):
                                                                  f"[.//div[text() = '{filter_name}']]"
                                                                  f"//input[@* = '{filter_value}']")
         filter_checkbox.click()
+
+
+@step('Starting with page "{l_page}" validate result "{desired_title}" till page "{n_pages}"')
+def check_all_item_title(context, l_page, desired_title, n_pages):
+    issues = []
+    landing_page = context.browser.find_element(By.XPATH, f"//a[@class = 'pagination__item' and text() = '{l_page}']")
+    landing_page.click()
+    current_page = context.browser.find_element(By.XPATH, "//a[@class = 'pagination__item' and @aria-current = 'page']")
+    while int(current_page.text) > int(n_pages):
+        all_items = context.browser.find_elements(By.XPATH, "//li[contains(@id, 'item')]//span[@role = 'heading']")
+        for item in all_items:
+            title = item.text
+            if desired_title.lower() not in title.lower():
+                issues.append(f'{title} is not {desired_title} related')
+        previous_page = context.browser.find_element(By.XPATH, "//a[@type = 'previous']")
+        previous_page.click()
+
+        current_page = context.browser.find_element(By.XPATH, "//a[@class = 'pagination__item' and "
+                                                              "@aria-current = 'page']")
+
+    if issues:
+        raise Exception(f'Following issues discovered: \n{issues}')
