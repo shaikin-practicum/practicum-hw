@@ -1,14 +1,6 @@
 from behave import step
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from time import sleep
-
-
-@step('Navigate to ebay')
-def test(context):
-    context.browser = webdriver.Chrome()
-    context.browser.maximize_window()
-    context.browser.get("https://www.ebay.com")
 
 
 @step('In search bar type "{item}"')
