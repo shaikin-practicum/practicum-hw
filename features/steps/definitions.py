@@ -102,3 +102,12 @@ def check_all_item_title(context, l_page, desired_title, n_pages):
 
     if issues:
         raise Exception(f'Following issues discovered: \n{issues}')
+
+
+@step('Checking categories through table data')
+def check_categories(context):
+    for row in context.table:
+        category_name = row['category_name']
+        category_path = context.browser.find_element(By.XPATH, f"//a[contains(text(), '{category_name}')]")
+        if category_name.lower() not in category_path.text.lower():
+            raise Exception(f'Category "{category_name}" not found on "flyout menu"')

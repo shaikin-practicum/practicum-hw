@@ -75,3 +75,56 @@ Feature: eBay Regression
     Given In search bar type "shoes"
     And Click "search" button
     Then Starting with page "5" validate result "shoes" till page "2"
+
+  Scenario: Validation categories flyout menu from the search
+    Given Click 'Shop by category' link
+    Then Checking categories through table data
+    | category_name                            |
+    | Motors                                   |
+    | Parts & accessories                      |
+    | Cars & trucks                            |
+    | Motorcycles                              |
+    | Other vehicles                           |
+    | Clothing & Accessories                   |
+    | Women                                    |
+    | Men                                      |
+    | Handbags                                 |
+    | Collectible Sneakers                     |
+    | Sporting goods                           |
+    | Hunting Equipment                        |
+    | Golf Equipment                           |
+    | Outdoor sports                           |
+    | Cycling Equipment                        |
+    | All Brands                               |
+    | Electronics                              |
+    | Computers, Tablets & Network Hardware    |
+    | Cell Phones, Smart Watches & Accessories |
+    | Video Games & Consoles                   |
+    | Cameras & Photo                          |
+    | Business & Industrial                    |
+    | Modular & Pre-Fabricated Buildings       |
+    | Test, Measurement & Inspection Equipment |
+    | Heavy Equipment, Parts & Attachments     |
+    | Restaurant & Food Service                |
+    | Jewelry & Watches                        |
+    | Luxury Watches                           |
+    | Wristwatches                             |
+    | Fashion Jewelry                          |
+    | Fine Jewelry                             |
+    | All Categories                           |
+    | Collectibles & Art                       |
+    | Trading Cards                            |
+    | Collectibles                             |
+    | Coins & Paper Money                      |
+    | Sports Memorabilia                       |
+    | Home & garden                            |
+    | Yard, Garden & Outdoor Living Items      |
+    | Tools & Workshop Equipment               |
+    | Home Improvement                         |
+    | Kitchen, Dining & Bar Supplies           |
+    | Other categories                         |
+    | Books, Movies & Music                    |
+    | Toys & Hobbies                           |
+    | Health & Beauty                          |
+    | Baby Essentials                          |
+    | Seasonal Sales & Events                  |
