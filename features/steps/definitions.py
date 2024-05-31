@@ -1,6 +1,8 @@
 from behave import step
 from selenium.webdriver.common.by import By
 from time import sleep
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.support.ui import WebDriverWait
 
 
 @step('In search bar type "{item}"')
@@ -111,3 +113,13 @@ def check_categories(context):
         category_path = context.browser.find_element(By.XPATH, f"//a[contains(text(), '{category_name}')]")
         if category_name.lower() not in category_path.text.lower():
             raise Exception(f'Category "{category_name}" not found on "flyout menu"')
+
+
+@step('Automatic movement')
+def find_next_carousel_slide(context):
+    next_slide = (WebDriverWait(context.browser, 5)
+                  .until(EC.presence_of_element_located(
+        (By.XPATH, "//ul[@id = 's0-1-0-48-1-2-4-17[0[0]]-0[1]-2-@match-media-0-@ebay-carousel-list'"
+                   " and contains(@style, 'transform')]")),
+        message="Automatic movement is not working"))
+    print(f'Automatic movement is working because {next_slide} is found')

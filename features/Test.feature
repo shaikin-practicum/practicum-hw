@@ -128,3 +128,6 @@ Feature: eBay Regression
     | Health & Beauty                          |
     | Baby Essentials                          |
     | Seasonal Sales & Events                  |
+
+  Scenario: Checking automatic movement in the carousel
+    Given Automatic movement
