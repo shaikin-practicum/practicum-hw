@@ -139,3 +139,12 @@ Feature: eBay Regression
   Scenario: Checking carousel control previous
     Given Navigate to previous slide
     And Slide is 4 for Previous button
+
+  Scenario: Checking carousel control Pause
+    Given Pause click
+    And Check no movement and on the on slide 1 for Pause
+
+  Scenario: Checking carousel control Play
+    Given Pause click
+    And Play click
+    And Slide is 2 for Play button

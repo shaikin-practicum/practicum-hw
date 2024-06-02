@@ -124,18 +124,35 @@ def find_next_carousel_slide(context):
     print(f'Automatic movement is working because {next_slide} is found')
 
 
-@step('Navigate to {direction} slide')
-def navigation(context, direction):
+@step('Navigate to {number} slide')
+def navigation(context, number):
     button = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
-        (By.XPATH, f"//button[@aria-label = 'Go to {direction} banner']"))))
+        (By.XPATH, f"//button[@aria-label = 'Go to {number} banner']"))))
     button.click()
 
 
-@step('Slide is {number} for {direction} button')
-def slide_checking(context, number, direction):
-    slide = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+@step('Slide is {number} for {action} button')
+def slide_checking(context, number, action):
+    slide = (WebDriverWait(context.browser, 2).until(EC.presence_of_element_located(
         (By.XPATH, f"//*[contains(@id, '[1]') and contains(@style, 'transform')]/li[{number}]"))))
     if slide.is_displayed():
-        print(f"{direction} button is working")
+        print(f"{action} button is working")
     else:
-        raise Exception(f"{direction} button is not working or slide is not moved")
+        raise Exception(f"{action} button is not working or slide is not moved")
+
+
+@step('{action} click')
+def actions(context, action):
+    action_button = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+        (By.XPATH, f"//button[@aria-label = '{action} Banner Carousel']"))))
+    action_button.click()
+
+
+@step('Check no movement and on the on slide {number} for {action}')
+def check_actions(context, number, action):
+    current_slide = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+        (By.XPATH, f"//*[contains(@id, '[1]')]/li[{number}]"))))
+    if current_slide.is_displayed():
+        print(f"{action} button is working")
+    else:
+        raise Exception(f"{action} button is not working or slide is moved")
