@@ -117,9 +117,21 @@ def check_categories(context):
 
 @step('Automatic movement')
 def find_next_carousel_slide(context):
-    next_slide = (WebDriverWait(context.browser, 5)
-                  .until(EC.presence_of_element_located(
+    next_slide = (WebDriverWait(context.browser, 5).until(EC.presence_of_element_located(
         (By.XPATH, "//ul[@id = 's0-1-0-48-1-2-4-17[0[0]]-0[1]-2-@match-media-0-@ebay-carousel-list'"
                    " and contains(@style, 'transform')]")),
         message="Automatic movement is not working"))
     print(f'Automatic movement is working because {next_slide} is found')
+
+
+@step('Next slide')
+def next_slide_checking(context):
+    next_button = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+        (By.XPATH, "//*[@id = 's0-1-0-48-1-2-4-17[0[0]]-0[1]-2-@match-media-0-@ebay-carousel-next']"))))
+    next_button.click()
+    next_slide = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+        (By.XPATH, "//*[@id = 's0-1-0-48-1-2-4-17[0[0]]-0[1]-2-@match-media-0-@ebay-carousel-list']/li[2]"))))
+    if next_slide.is_displayed():
+        print(f"Next button is working")
+    else:
+        raise Exception(f"Next button is not working or slide is not moved")

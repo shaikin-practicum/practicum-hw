@@ -131,3 +131,6 @@ Feature: eBay Regression
 
   Scenario: Checking automatic movement in the carousel
     Given Automatic movement
+
+  Scenario: Checking carousel control next
+    Given Next slide
