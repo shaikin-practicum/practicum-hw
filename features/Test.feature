@@ -133,4 +133,9 @@ Feature: eBay Regression
     Given Automatic movement
 
   Scenario: Checking carousel control next
-    Given Next slide
+    Given Navigate to next slide
+    And Slide is 2 for Next button
+
+  Scenario: Checking carousel control previous
+    Given Navigate to previous slide
+    And Slide is 4 for Previous button
