@@ -156,3 +156,51 @@ def check_actions(context, number, action):
         print(f"{action} button is working")
     else:
         raise Exception(f"{action} button is not working or slide is moved")
+
+
+@step('Check filters and validate that all items related those filters')
+def test_filter(context):
+    for row in context.table:
+        filter_name = row['filter_name']
+        filter_value = row['filter_value']
+        filter_checkbox = context.browser.find_element(By.XPATH, f"//li[@class = 'x-refine__main__list ']"
+                                                                 f"[.//div[text() = '{filter_name}']]"
+                                                                 f"//input[@* = '{filter_value}']")
+        filter_checkbox.click()
+    all_items = context.browser.find_elements(By.XPATH, f"//li[contains(@id, 'item')]")
+    main_window = context.browser.current_window_handle
+    wait = WebDriverWait(context.browser, 10)
+    issues = []
+    for item in all_items:
+        item_title = item.find_element(By.XPATH, ".//span[@role = 'heading']").text
+        item_url = item.find_element(By.XPATH, ".//a[@class = 's-item__link']").get_attribute('href')
+        context.browser.execute_script(f"window.open('{item_url}')")
+        context.browser.switch_to.window(context.browser.window_handles[-1])
+        all_labels = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//dt[@class = 'ux-labels-values__labels']")))
+        all_values = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//dd[@class = 'ux-labels-values__values']")))
+
+        all_labels_text = []
+        for label in all_labels:
+            all_labels_text.append(label.text)
+
+        all_values_text = []
+        for value in all_values:
+            all_values_text.append(value.text)
+
+        item_specs = dict(zip(all_labels_text, all_values_text))
+
+        for row in context.table:
+            filter_name = row['filter_name']
+            filter_value = row['filter_value']
+
+            if filter_name not in item_specs.keys():
+                issues.append(f'{item_title} does not have anything related to {filter_name}')
+            elif item_specs[filter_name] != filter_value:
+                issues.append(f'{item_title} is not related to {filter_value} by {filter_name}')
+
+        context.browser.close()
+
+        context.browser.switch_to.window(main_window)
+
+    if issues:
+        raise Exception(f'Following issues discovered: \n{issues}')

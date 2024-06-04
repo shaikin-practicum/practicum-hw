@@ -148,3 +148,14 @@ Feature: eBay Regression
     Given Pause click
     And Play click
     And Slide is 2 for Play button
+
+  Scenario: Filters validation
+    Given In search bar type "shoes"
+    And Click "search" button
+    Then Check filters and validate that all items related those filters
+    | filter_name  | filter_value |
+    | Brand        | adidas       |
+    | Department   | Teens        |
+    | Color        | Brown        |
+    | US Shoe Size | 7            |
+    
