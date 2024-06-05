@@ -115,13 +115,17 @@ def check_categories(context):
             raise Exception(f'Category "{category_name}" not found on "flyout menu"')
 
 
-@step('Automatic movement')
-def find_next_carousel_slide(context):
-    next_slide = (WebDriverWait(context.browser, 5).until(EC.presence_of_element_located(
-        (By.XPATH, "//ul[@id = 's0-1-0-48-1-2-4-17[0[0]]-0[1]-2-@match-media-0-@ebay-carousel-list'"
-                   " and contains(@style, 'transform')]")),
-        message="Automatic movement is not working"))
-    print(f'Automatic movement is working because {next_slide} is found')
+@step('Carousel: slides are switching')
+def carousel_slides_default(context):
+    carousel_slides = WebDriverWait(context.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+    print(f'There are {len(carousel_slides)} slides in the carousel')
+    wait = WebDriverWait(context.browser, 4 * len(carousel_slides))
+    for slide in carousel_slides:
+        # visible
+        wait.until(EC.visibility_of(slide), message=f'Slide {carousel_slides.index(slide)} wasn\'t visible')
+        # invisible
+        wait.until(EC.invisibility_of_element(slide), message=f'Slide {carousel_slides.index(slide)} remained visible')
+        print(f'Slide {carousel_slides.index(slide)} is fine')
 
 
 @step('Navigate to {number} slide')

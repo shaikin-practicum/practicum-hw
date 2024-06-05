@@ -129,9 +129,9 @@ Feature: eBay Regression
     | Baby Essentials                          |
     | Seasonal Sales & Events                  |
 
-  Scenario: Checking automatic movement in the carousel
-    Given Automatic movement
-
+  Scenario: Carousel - vanilla spinning validation
+    Then Carousel: slides are switching
+    
   Scenario: Checking carousel control next
     Given Navigate to next slide
     And Slide is 2 for Next button
@@ -158,4 +158,3 @@ Feature: eBay Regression
     | Department   | Teens        |
     | Color        | Brown        |
     | US Shoe Size | 7            |
-    
