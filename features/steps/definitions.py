@@ -145,21 +145,29 @@ def slide_checking(context, number, action):
         raise Exception(f"{action} button is not working or slide is not moved")
 
 
-@step('{action} click')
-def actions(context, action):
-    action_button = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
-        (By.XPATH, f"//button[@aria-label = '{action} Banner Carousel']"))))
+@step('Carousel: "{btn}" button')
+def carousel_controls(context, btn):
+    action_button = WebDriverWait(context.browser, 10).until(EC.presence_of_element_located((By.XPATH, f"//button[@aria-label = '{btn} Banner Carousel']")))
     action_button.click()
+    sleep(3)
+    search_field = context.browser.find_element(By.XPATH, "//input[@placeholder = 'Search for anything']")
+    search_field.click()
+    sleep(3)
 
 
-@step('Check no movement and on the on slide {number} for {action}')
-def check_actions(context, number, action):
-    current_slide = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
-        (By.XPATH, f"//*[contains(@id, '[1]')]/li[{number}]"))))
-    if current_slide.is_displayed():
-        print(f"{action} button is working")
+@step('Carousel: slides are paused')
+def carousel_slides_paused(context):
+    initial_slide = WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+    initial_slide_text = initial_slide.text
+    sleep(10)
+    final_slide = WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+    final_slide_text = final_slide.text
+    if initial_slide_text == final_slide_text:
+        print(f'Slides in carousel in not moving')
     else:
-        raise Exception(f"{action} button is not working or slide is moved")
+        raise Exception("Carousel is still moving.")
 
 
 @step('Check filters and validate that all items related those filters')

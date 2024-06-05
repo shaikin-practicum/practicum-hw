@@ -131,7 +131,7 @@ Feature: eBay Regression
 
   Scenario: Carousel - vanilla spinning validation
     Then Carousel: slides are switching
-    
+
   Scenario: Checking carousel control next
     Given Navigate to next slide
     And Slide is 2 for Next button
@@ -140,14 +140,14 @@ Feature: eBay Regression
     Given Navigate to previous slide
     And Slide is 4 for Previous button
 
-  Scenario: Checking carousel control Pause
-    Given Pause click
-    And Check no movement and on the on slide 1 for Pause
+  Scenario: Carousel - Pause verification
+    When Carousel: "Pause" button
+    Then Carousel: slides are paused
 
-  Scenario: Checking carousel control Play
-    Given Pause click
-    And Play click
-    And Slide is 2 for Play button
+  Scenario: Carousel - Play verification
+    When Carousel: "Pause" button
+    And Carousel: "Play" button
+    And Carousel: slides are switching
 
   Scenario: Filters validation
     Given In search bar type "shoes"
