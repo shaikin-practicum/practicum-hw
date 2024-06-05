@@ -117,7 +117,8 @@ def check_categories(context):
 
 @step('Carousel: slides are switching')
 def carousel_slides_default(context):
-    carousel_slides = WebDriverWait(context.browser, 10).until(EC.presence_of_all_elements_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+    carousel_slides = WebDriverWait(context.browser, 10).until(EC.presence_of_all_elements_located(
+        (By.XPATH, f"//div[contains(@class, 'tracking')]")))
     print(f'There are {len(carousel_slides)} slides in the carousel')
     wait = WebDriverWait(context.browser, 4 * len(carousel_slides))
     for slide in carousel_slides:
@@ -128,46 +129,46 @@ def carousel_slides_default(context):
         print(f'Slide {carousel_slides.index(slide)} is fine')
 
 
-@step('Navigate to {number} slide')
-def navigation(context, number):
-    button = (WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
-        (By.XPATH, f"//button[@aria-label = 'Go to {number} banner']"))))
+@step('Navigate to {direction} slide')
+def navigation(context, direction):
+    initial_slide = WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'tracking')]")))
+    initial_slide_text = initial_slide.text
+    button = WebDriverWait(context.browser, 1).until(EC.presence_of_element_located(
+        (By.XPATH, f"//button[@aria-label = 'Go to {direction} banner']")))
     button.click()
-
-
-@step('Slide is {number} for {action} button')
-def slide_checking(context, number, action):
-    slide = (WebDriverWait(context.browser, 2).until(EC.presence_of_element_located(
-        (By.XPATH, f"//*[contains(@id, '[1]') and contains(@style, 'transform')]/li[{number}]"))))
-    if slide.is_displayed():
-        print(f"{action} button is working")
+    sleep(1)
+    final_slide = WebDriverWait(context.browser, 10).until(
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'tracking')]")))
+    final_slide_text = final_slide.text
+    if initial_slide_text != final_slide_text:
+        print(f'Button {direction} is working')
     else:
-        raise Exception(f"{action} button is not working or slide is not moved")
+        raise Exception(f'Button {direction} is not working')
 
 
 @step('Carousel: "{btn}" button')
 def carousel_controls(context, btn):
-    action_button = WebDriverWait(context.browser, 10).until(EC.presence_of_element_located((By.XPATH, f"//button[@aria-label = '{btn} Banner Carousel']")))
+    action_button = WebDriverWait(context.browser, 10).until(EC.presence_of_element_located(
+        (By.XPATH, f"//button[@aria-label = '{btn} Banner Carousel']")))
     action_button.click()
-    sleep(3)
     search_field = context.browser.find_element(By.XPATH, "//input[@placeholder = 'Search for anything']")
     search_field.click()
-    sleep(3)
 
 
 @step('Carousel: slides are paused')
 def carousel_slides_paused(context):
     initial_slide = WebDriverWait(context.browser, 10).until(
-        EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'tracking')]")))
     initial_slide_text = initial_slide.text
-    sleep(10)
+    sleep(5)
     final_slide = WebDriverWait(context.browser, 10).until(
-        EC.presence_of_element_located((By.XPATH, f"//div[contains(@class, 'tracking')]")))
+        EC.presence_of_element_located((By.XPATH, "//div[contains(@class, 'tracking')]")))
     final_slide_text = final_slide.text
     if initial_slide_text == final_slide_text:
-        print(f'Slides in carousel in not moving')
+        print('Slides in carousel are not moving')
     else:
-        raise Exception("Carousel is still moving.")
+        raise Exception("Slides in carousel are still moving")
 
 
 @step('Check filters and validate that all items related those filters')
@@ -188,8 +189,10 @@ def test_filter(context):
         item_url = item.find_element(By.XPATH, ".//a[@class = 's-item__link']").get_attribute('href')
         context.browser.execute_script(f"window.open('{item_url}')")
         context.browser.switch_to.window(context.browser.window_handles[-1])
-        all_labels = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//dt[@class = 'ux-labels-values__labels']")))
-        all_values = wait.until(EC.presence_of_all_elements_located((By.XPATH, "//dd[@class = 'ux-labels-values__values']")))
+        all_labels = wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//dt[@class = 'ux-labels-values__labels']")))
+        all_values = wait.until(EC.presence_of_all_elements_located(
+            (By.XPATH, "//dd[@class = 'ux-labels-values__values']")))
 
         all_labels_text = []
         for label in all_labels:

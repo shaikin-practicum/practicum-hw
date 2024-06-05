@@ -133,12 +133,12 @@ Feature: eBay Regression
     Then Carousel: slides are switching
 
   Scenario: Checking carousel control next
-    Given Navigate to next slide
-    And Slide is 2 for Next button
+    Given Carousel: "Pause" button
+    Then Navigate to next slide
 
   Scenario: Checking carousel control previous
-    Given Navigate to previous slide
-    And Slide is 4 for Previous button
+    Given Carousel: "Pause" button
+    Then Navigate to previous slide
 
   Scenario: Carousel - Pause verification
     When Carousel: "Pause" button
@@ -147,7 +147,7 @@ Feature: eBay Regression
   Scenario: Carousel - Play verification
     When Carousel: "Pause" button
     And Carousel: "Play" button
-    And Carousel: slides are switching
+    Then Carousel: slides are switching
 
   Scenario: Filters validation
     Given In search bar type "shoes"
