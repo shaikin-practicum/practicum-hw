@@ -1,4 +1,5 @@
 from behave import step
+from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.support import expected_conditions as EC
@@ -152,8 +153,7 @@ def carousel_controls(context, btn):
     action_button = WebDriverWait(context.browser, 10).until(EC.presence_of_element_located(
         (By.XPATH, f"//button[@aria-label = '{btn} Banner Carousel']")))
     action_button.click()
-    search_field = context.browser.find_element(By.XPATH, "//input[@placeholder = 'Search for anything']")
-    search_field.click()
+    ActionChains(context.browser).move_by_offset(10, 10).perform()
 
 
 @step('Carousel: slides are paused')
